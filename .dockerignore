@@ -3,7 +3,7 @@
 **/.git
 **/__pycache__
 *.pyc
-agent
+# agent
 *.db
 *.log
 .env
