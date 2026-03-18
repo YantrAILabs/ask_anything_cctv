@@ -1,0 +1,9 @@
+{
+    "server_url": "https://ask-anything-cctv-280830514033.us-central1.run.app",
+    "site_name": "Factory-Site-1",
+    "username": "admin",
+    "password": "password",
+    "tunnel_method": "yantrai",
+    "manual_url": "",
+    "startup_enabled": false
+}

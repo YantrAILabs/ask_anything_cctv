@@ -1,0 +1,15 @@
+**/node_modules
+**/build
+**/.git
+**/__pycache__
+*.pyc
+agent
+*.db
+*.log
+.env
+frontend/src
+frontend/public
+frontend/package-lock.json
+frontend/vite.config.js
+backend/node_modules
+backend/build

@@ -1,0 +1,15 @@
+fastapi==0.135.1
+uvicorn==0.41.0
+opencv-python-headless==4.13.0.92
+numpy
+pydantic
+onvif-zeep==0.2.12
+psycopg2-binary==2.9.11
+python-dotenv==1.2.2
+requests
+zeep
+transformers
+accelerate
+torch
+qwen-vl-utils
+Pillow
