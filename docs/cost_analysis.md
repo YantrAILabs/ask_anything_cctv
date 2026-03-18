@@ -11,6 +11,34 @@ Running this application 24/7 on Cloud Run with your current configuration (**1 
 
 ---
 
+## 📊 Model Tier Comparison (Cloud Run)
+
+If you upgrade to larger models, your compute costs will increase due to higher RAM and GPU requirements. Note that 7B+ models generally require an **Nvidia L4 GPU** for acceptable latency.
+
+| Model Tier | Configuration | Est. Compute Cost (24/7) | AI Latency |
+| :--- | :--- | :--- | :--- |
+| **Qwen 2B** | 1-2 vCPU, 2-4GB RAM | **$75 - $150 / mo** | Slow (CPU) |
+| **Qwen 3B** | 4 vCPU, 8GB RAM | **~$300 / mo** | Moderate (CPU) |
+| **Qwen 7B** | 4 vCPU, 16GB RAM + **L4 GPU** | **~$750 / mo** | Fast (GPU) |
+| **Qwen 9B** | 8 vCPU, 32GB RAM + **L4 GPU** | **~$1,100 / mo** | Fast (GPU) |
+
+*Prices exclude Network Egress (~$300/mo) and assume the instance is active 24/7.*
+
+---
+
+## 🖥️ Can CPUs handle Qwen models?
+
+Yes, but with caveats. Qwen VL models can technically run on CPUs using standard libraries like `torch` and `transformers`, which is why your **Qwen 2B** setup works today.
+
+### 🧠 CPU Viability by Model Size
+- **2B / 3B Models**: These are "CPU-viable" for logging tasks that run every 15-60 seconds. On 4 vCPUs, a summary might take 2-5 seconds. 
+- **⚠️ RAM Hazard**: Your current **2GiB** setting is very risky. Qwen 2B typically needs **~3.5GB to 5GB** of RAM to load comfortably along with the OS and backend. You may see **Out of Memory (OOM)** crashes during model loading.
+- **7B / 9B Models**: These are **NOT practical on CPUs** for your 24/7 use case because:
+    - **Latency**: A single frame summary can take **30 to 60+ seconds** on a CPU, which is slower than your 15s logging interval.
+    - **RAM Cost**: They require **15GB to 20GB+** of RAM. On Cloud Run, paying for 32GB of CPU-only RAM is often **more expensive** than just attaching an L4 GPU.
+
+**Recommendation**: Stick to **Qwen 2B** if you want to avoid GPU costs, but increase your RAM to at least **4GiB** to ensure stability.
+
 ## 🔍 Key Cost Drivers
 
 ### 1. "Always-On" Background Threads
